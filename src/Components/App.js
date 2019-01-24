@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
-import NavBar from './NavBar';
+import NavBarContainer from '../Containers/NavBarContainer';
 import Routes from './Routes';
 
 class App extends Component {
-  componentDidMount() {
-    this.props.get_posts();
-  }
-
   render() {
-    return (
-      <div className="App">
-        <NavBar />
-        <Routes />
-      </div>
-    );
+    if (this.props.loading) {
+      return <h1>Loading...</h1>;
+    } else {
+      return (
+        <div className="App">
+          <NavBarContainer />
+          <Routes />
+        </div>
+      );
+    }
   }
 }
 

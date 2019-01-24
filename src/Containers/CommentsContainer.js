@@ -12,6 +12,8 @@ class CommentsContainer extends Component {
 function mapStateToProps(state, { postId }) {
   if (state.posts.hasOwnProperty(postId)) {
     return { comments: state.posts[postId].comments };
+  } else {
+    return { comments: {} };
   }
 }
 

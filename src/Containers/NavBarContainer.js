@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import App from '../Components/App';
+import NavBar from '../Components/NavBar';
 import { get_posts } from '../actionCreators';
 
-class AppContainer extends Component {
+class NavBarContainer extends Component {
   render() {
-    return <App {...this.props} />;
+    return <NavBar {...this.props} />;
   }
 }
 
@@ -16,4 +16,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   { get_posts }
-)(AppContainer);
+)(NavBarContainer);

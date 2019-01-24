@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import AppContainer from './Containers/AppContainer';
+import App from './Components/App';
 import * as serviceWorker from './serviceWorker';
 
 const store = createStore(
@@ -23,7 +23,7 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <AppContainer />
+      <App />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

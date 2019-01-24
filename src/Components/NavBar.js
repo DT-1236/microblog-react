@@ -6,6 +6,10 @@ class NavBar extends Component {
     // Map over props/state containing posts
     // return PostCards
   }
+
+  componentDidMount() {
+    this.props.get_posts();
+  }
   render() {
     return (
       <div>
