@@ -9,8 +9,10 @@ class CommentsContainer extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return { comments: state.posts[ownProps.postId].comments };
+function mapStateToProps(state, { postId }) {
+  if (state.posts.hasOwnProperty(postId)) {
+    return { comments: state.posts[postId].comments };
+  }
 }
 
 export default connect(
