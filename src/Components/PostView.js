@@ -3,17 +3,13 @@ import { Link } from 'react-router-dom';
 import CommentsContainer from '../Containers/CommentsContainer';
 
 class PostView extends Component {
-  componentDidMount() {
-    console.log('did mount post viewer, bitch?');
-    const { description, history } = this.props;
-    if (!description) {
-      history.replace('/');
-    }
-  }
+  componentDidMount() {}
 
   render() {
-    console.log('rendering post view, bitch?');
     const { title, description, body, id, remove, history } = this.props;
+    if (!description && !this.props.loading) {
+      history.replace('/');
+    }
     return (
       <div className="d-flex justify-content-center">
         <div className="card bg-light mb-3">

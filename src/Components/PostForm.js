@@ -8,19 +8,36 @@ class PostForm extends Component {
       title: this.props.title || '',
       description: this.props.description || '',
       body: this.props.body || '',
-      comments: {}
+      comments: {},
+      loading: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  static getDerivedStateFromProps(props, prevState) {
+    if (prevState.loading) {
+      return {
+        title: props.title || '',
+        description: props.description || '',
+        body: props.body || '',
+        loading: false
+      };
+    } else {
+      return null;
+    }
+  }
+
   handleSubmit(event) {
     const { edit, mode, add, id, history, length } = this.props;
     event.preventDefault();
+
+    const { loading, ...details } = this.state;
+
     if (mode === 'Edit') {
-      edit({ ...this.state, id });
+      edit({ ...details, id });
     } else {
-      add({ ...this.state, id: length + 1 });
+      add({ ...details, id: length + 1 });
     }
     history.push(`/${id || length + 1}`);
   }
