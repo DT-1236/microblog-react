@@ -6,7 +6,10 @@ class Comment extends Component {
     const { postId, id, remove_comment } = this.props;
     return (
       <div className="Comment">
-        <button onClick={() => remove_comment({ postId, commentId: id })}>
+        <button
+          className="border-0 text-danger"
+          onClick={() => remove_comment({ postId, commentId: id })}
+        >
           <i className="fas fa-trash-alt" />
         </button>
         <p>{this.props.comment}</p>
