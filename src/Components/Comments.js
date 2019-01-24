@@ -72,7 +72,8 @@ class Comments extends Component {
 }
 
 Comments.defaultProps = {
-  //   comments: { '1': { body: 'I like cake' }, '2': { body: 'but I like pie' } }
+  comments: {}
+  // { '1': { body: 'I like cake' }, '2': { body: 'but I like pie' } }
 };
 
 export default Comments;
