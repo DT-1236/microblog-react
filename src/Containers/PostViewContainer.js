@@ -9,8 +9,8 @@ class PostViewContainer extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return { ...state.posts[ownProps.id] };
+function mapStateToProps(state, { id }) {
+  return { ...state.posts[id] };
 }
 
 export default connect(
