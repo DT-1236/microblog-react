@@ -1,26 +1,20 @@
-import { ADD, REMOVE, EDIT, REMOVE_COMMENT, ADD_COMMENT } from './actionTypes';
+import {
+  ADD,
+  REMOVE,
+  EDIT,
+  REMOVE_COMMENT,
+  ADD_COMMENT,
+  LOAD_POSTS
+} from './actionTypes';
 const INITIAL_STATE = {
-  posts: {
-    '1': {
-      title: 'TEST TITLE',
-      description: 'Some kind of test',
-      body: 'Eeven more teeeeext',
-      comments: {
-        '1': { body: 'I like cakes' },
-        '2': { body: 'But I like pies' }
-      }
-    },
-    '2': {
-      title: 'TEST TITLE2',
-      description: 'Some kind of test2',
-      body: 'Eeven more teeeeext2',
-      comments: {}
-    }
-  }
+  posts: {}
 };
 
 export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case LOAD_POSTS:
+      console.log('LOAD POSTS', { posts: action.payload });
+      return { posts: action.payload };
     case ADD:
     //   const { id, ...post } = action.payload;
     //   const newState = { ...state, posts: { ...state.posts } };

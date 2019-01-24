@@ -4,6 +4,10 @@ import NavBar from './NavBar';
 import Routes from './Routes';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.get_posts();
+  }
+
   render() {
     return (
       <div className="App">

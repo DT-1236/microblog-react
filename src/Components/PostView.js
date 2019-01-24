@@ -4,6 +4,7 @@ import CommentsContainer from '../Containers/CommentsContainer';
 
 class PostView extends Component {
   componentDidMount() {
+    console.log('did mount post viewer, bitch?');
     const { description, history } = this.props;
     if (!description) {
       history.replace('/');
@@ -11,6 +12,7 @@ class PostView extends Component {
   }
 
   render() {
+    console.log('rendering post view, bitch?');
     const { title, description, body, id, remove, history } = this.props;
     return (
       <div className="d-flex justify-content-center">
