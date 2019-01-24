@@ -5,9 +5,9 @@ class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.title,
-      description: this.props.description,
-      body: this.props.body,
+      title: this.props.title || '',
+      description: this.props.description || '',
+      body: this.props.body || '',
       comments: {}
     };
     this.handleChange = this.handleChange.bind(this);
@@ -15,14 +15,14 @@ class PostForm extends Component {
   }
 
   handleSubmit(event) {
-    const { edit, mode, add, id, history } = this.props;
+    const { edit, mode, add, id, history, length } = this.props;
     event.preventDefault();
     if (mode === 'Edit') {
       edit({ ...this.state, id });
     } else {
-      add({ ...this.state, id });
+      add({ ...this.state, id: length + 1 });
     }
-    history.push(`/${id}`);
+    history.push(`/${id || length + 1}`);
   }
 
   handleChange(evt) {
