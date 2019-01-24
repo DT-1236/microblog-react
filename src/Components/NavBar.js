@@ -9,7 +9,9 @@ class NavBar extends Component {
   render() {
     return (
       <div>
-        <h1>Microblog</h1>
+        <h1>
+          <Link to="/">Microblog</Link>
+        </h1>
         <p>Some rando description</p>
         <Link to="/new">Add a new Post</Link>
       </div>
