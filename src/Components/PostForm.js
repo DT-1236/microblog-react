@@ -15,7 +15,8 @@ class PostForm extends Component {
   }
 
   handleSubmit(event) {
-    const { edit, mode, add, id, history, length } = this.props;
+    const { mode, id, history, length } = this.props;
+    const { edit, add } = this.props.funcs;
     event.preventDefault();
     if (mode === 'Edit') {
       edit({ ...this.state, id });

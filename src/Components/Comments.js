@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import CommentContainer from '../Containers/CommentContainer';
+import Comment from './Comment';
 
 class Comments extends Component {
   constructor(props) {
@@ -14,8 +14,8 @@ class Comments extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    const { add_comment, postId, comments } = this.props;
-    add_comment({
+    const { postId, comments } = this.props;
+    this.props.funcs.addComment({
       postId: postId,
       comment: this.state.newComment,
       commentId: Object.keys(comments).length + 1
@@ -30,7 +30,8 @@ class Comments extends Component {
   renderComments() {
     const { comments, postId } = this.props;
     return Object.keys(comments).map(id => (
-      <CommentContainer
+      <Comment
+        remove={this.props.funcs.removeComment}
         postId={postId}
         id={id}
         key={id}

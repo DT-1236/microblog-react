@@ -6,21 +6,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './Components/App';
 import * as serviceWorker from './serviceWorker';
 
-import rootReducer from './rootReducer';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
-
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

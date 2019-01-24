@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CommentsContainer from '../Containers/CommentsContainer';
+import Comments from './Comments';
 
 class PostView extends Component {
   componentDidMount() {
@@ -11,7 +11,8 @@ class PostView extends Component {
   }
 
   render() {
-    const { title, description, body, id, remove, history } = this.props;
+    const { title, description, body, id, history, comments } = this.props;
+    const { addComment, removeComment, remove } = this.props.funcs;
     return (
       <div className="d-flex justify-content-center">
         <div className="card bg-light mb-3">
@@ -38,7 +39,11 @@ class PostView extends Component {
           </div>
           <p>{body}</p>
           <hr />
-          <CommentsContainer postId={id} />
+          <Comments
+            funcs={{ addComment, removeComment }}
+            comments={comments}
+            postId={id}
+          />
         </div>
       </div>
     );
