@@ -8,13 +8,14 @@ import {
 } from './actionTypes';
 const INITIAL_STATE = {
   posts: {},
+  titles: {},
   loading: true
 };
 
 export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case LOAD_POSTS:
-      return { posts: action.payload, loading: false };
+      return { titles: action.payload, loading: false };
     case ADD:
     //   const { id, ...post } = action.payload;
     //   const newState = { ...state, posts: { ...state.posts } };

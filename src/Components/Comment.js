@@ -3,12 +3,12 @@ import './App.css';
 
 class Comment extends Component {
   render() {
-    const { postId, id, delete_commentAPI } = this.props;
+    const { postId, id, deleteCommentAPI } = this.props;
     return (
       <div className="Comment">
         <button
           className="border-0 text-danger"
-          onClick={() => delete_commentAPI({ postId, commentId: id })}
+          onClick={() => deleteCommentAPI({ postId, commentId: id })}
         >
           <i className="fas fa-trash-alt" />
         </button>

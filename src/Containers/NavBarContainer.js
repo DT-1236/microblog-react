@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NavBar from '../Components/NavBar';
-import { get_posts } from '../actionCreators';
+import { getPostsAPI } from '../actionCreators';
 
 class NavBarContainer extends Component {
   render() {
@@ -15,5 +15,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { get_posts }
+  { getPostsAPI }
 )(NavBarContainer);

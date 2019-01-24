@@ -30,27 +30,27 @@ export function edit(payload) {
     payload
   };
 }
-export function remove_comment(payload) {
+export function removeComment(payload) {
   return {
     type: REMOVE_COMMENT,
     payload
   };
 }
-export function add_comment(payload) {
+export function addComment(payload) {
   return {
     type: ADD_COMMENT,
     payload
   };
 }
 
-export function got_posts(payload) {
+export function gotPosts(payload) {
   return {
     type: LOAD_POSTS,
     payload
   };
 }
 
-export function get_posts() {
+export function getPostsAPI() {
   return async function(dispatch) {
     try {
       const res = await axios.get(`${BASE_URL}/api/posts/`);
@@ -69,14 +69,14 @@ export function get_posts() {
         return acc;
       }, {});
 
-      dispatch(got_posts(posts));
+      dispatch(gotPosts(posts));
     } catch (error) {
       console.log(error);
     }
   };
 }
 //////////
-export function update_post({ id, ...details }) {
+export function updatePostAPI({ id, ...details }) {
   return async function(dispatch) {
     try {
       await axios.put(`${BASE_URL}/api/posts/${id}`, details);
@@ -87,7 +87,7 @@ export function update_post({ id, ...details }) {
     }
   };
 }
-export function add_post(payload) {
+export function addPostAPI(payload) {
   return async function(dispatch) {
     try {
       const res = await axios.post(`${BASE_URL}/api/posts/`, payload);
@@ -99,7 +99,7 @@ export function add_post(payload) {
     }
   };
 }
-export function delete_post({ id }) {
+export function deletePostAPI({ id }) {
   return async function(dispatch) {
     try {
       await axios.delete(`${BASE_URL}/api/posts/${id}`);
@@ -110,7 +110,7 @@ export function delete_post({ id }) {
     }
   };
 }
-export function add_commentAPI({ postId, comment }) {
+export function addCommentAPI({ postId, comment }) {
   return async function(dispatch) {
     try {
       const res = await axios.post(
@@ -119,21 +119,21 @@ export function add_commentAPI({ postId, comment }) {
       );
 
       let payload = { postId, commentId: res.data.id, comment: res.data.text };
-      dispatch(add_comment(payload));
+      dispatch(addComment(payload));
     } catch (error) {
       console.log(error);
     }
   };
 }
 
-export function delete_commentAPI({ postId, commentId }) {
+export function deleteCommentAPI({ postId, commentId }) {
   return async function(dispatch) {
     try {
       await axios.delete(
         `${BASE_URL}/api/posts/${postId}/comments/${commentId}`
       );
 
-      dispatch(remove_comment({ commentId, postId }));
+      dispatch(removeComment({ commentId, postId }));
     } catch (error) {
       console.log(error);
     }

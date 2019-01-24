@@ -8,7 +8,7 @@ class NavBar extends Component {
   }
 
   componentDidMount() {
-    this.props.get_posts();
+    this.props.getPostsAPI();
   }
   render() {
     return (

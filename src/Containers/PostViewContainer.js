@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostView from '../Components/PostView';
-import { delete_post } from '../actionCreators';
+import { deletePostAPI } from '../actionCreators';
 
 class PostViewContainer extends Component {
   render() {
@@ -15,5 +15,5 @@ function mapStateToProps(state, { id }) {
 
 export default connect(
   mapStateToProps,
-  { delete_post }
+  { deletePostAPI }
 )(PostViewContainer);

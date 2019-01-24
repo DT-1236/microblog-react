@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostForm from '../Components/PostForm';
-import { update_post, add_post } from '../actionCreators';
+import { updatePostAPI, addPostAPI } from '../actionCreators';
 
 class PostFormContainer extends Component {
   render() {
@@ -16,5 +16,5 @@ function mapStateToProps(state, { id }) {
 
 export default connect(
   mapStateToProps,
-  { add_post, update_post }
+  { addPostAPI, updatePostAPI }
 )(PostFormContainer);

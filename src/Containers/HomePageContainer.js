@@ -9,7 +9,7 @@ class HomePageContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  return { posts: state.posts };
+  return { titles: state.titles };
 }
 
 export default connect(mapStateToProps)(HomePageContainer);

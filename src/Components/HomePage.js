@@ -3,9 +3,9 @@ import PostCard from './PostCard';
 
 class HomePage extends Component {
   renderPosts() {
-    const { posts } = this.props;
-    return Object.keys(posts).map(id => (
-      <PostCard {...posts[id]} id={id} key={id} />
+    const { titles } = this.props;
+    return Object.keys(titles).map(id => (
+      <PostCard {...titles[id]} id={id} key={id} />
     ));
   }
   render() {
