@@ -6,7 +6,7 @@ class PostView extends Component {
   componentDidMount() {}
 
   render() {
-    const { title, description, body, id, remove, history } = this.props;
+    const { title, description, body, id, delete_post, history } = this.props;
     if (!description && !this.props.loading) {
       history.replace('/');
     }
@@ -26,7 +26,7 @@ class PostView extends Component {
                 className="border-0 text-danger"
                 name="delete"
                 onClick={() => {
-                  remove({ id });
+                  delete_post({ id });
                   history.replace('/');
                 }}
               >

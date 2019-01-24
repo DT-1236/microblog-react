@@ -18,10 +18,9 @@ class Routes extends Component {
         <Route
           exact
           path="/:id"
-          render={props => {
-            console.log('before rending in routes');
-            return <PostViewContainer id={props.match.params.id} {...props} />;
-          }}
+          render={props => (
+            <PostViewContainer id={props.match.params.id} {...props} />
+          )}
         />
         <Route
           exact

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Comments from '../Components/Comments';
-import { add_comment } from '../actionCreators';
+import { add_commentAPI } from '../actionCreators';
 
 class CommentsContainer extends Component {
   render() {
@@ -19,5 +19,5 @@ function mapStateToProps(state, { postId }) {
 
 export default connect(
   mapStateToProps,
-  { add_comment }
+  { add_commentAPI }
 )(CommentsContainer);

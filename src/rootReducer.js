@@ -14,7 +14,6 @@ const INITIAL_STATE = {
 export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case LOAD_POSTS:
-      console.log('LOAD POSTS', { posts: action.payload });
       return { posts: action.payload, loading: false };
     case ADD:
     //   const { id, ...post } = action.payload;

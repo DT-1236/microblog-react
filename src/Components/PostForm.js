@@ -16,7 +16,7 @@ class PostForm extends Component {
   }
 
   static getDerivedStateFromProps(props, prevState) {
-    if (prevState.loading) {
+    if (prevState.loading && !props.loading) {
       return {
         title: props.title || '',
         description: props.description || '',
@@ -29,17 +29,18 @@ class PostForm extends Component {
   }
 
   handleSubmit(event) {
-    const { edit, mode, add, id, history, length } = this.props;
+    const { update_post, mode, add_post, id, history } = this.props;
     event.preventDefault();
 
     const { loading, ...details } = this.state;
+    let postId;
 
     if (mode === 'Edit') {
-      edit({ ...details, id });
+      update_post({ ...details, id });
     } else {
-      add({ ...details, id: length + 1 });
+      postId = add_post(details);
     }
-    history.push(`/${id || length + 1}`);
+    history.push(`/${id || postId}`);
   }
 
   handleChange(evt) {
@@ -48,65 +49,71 @@ class PostForm extends Component {
 
   render() {
     const { mode } = this.props;
-    return (
-      <div className="PostForm">
-        <h1>{mode} Post</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="title">Title:</label>
-            <input
-              type="text"
-              className="form-control"
-              id="title"
-              name="title"
-              aria-describedby="titleHelp"
-              placeholder="Enter title"
-              value={this.state.title}
-              onChange={this.handleChange}
-            />
-            <small id="titleHelp" className="form-text text-muted">
-              Give your post a title
-            </small>
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">Description:</label>
-            <input
-              type="text"
-              className="form-control"
-              id="description"
-              name="description"
-              aria-describedby="descriptionHelp"
-              placeholder="Enter description"
-              value={this.state.description}
-              onChange={this.handleChange}
-            />
-            <small id="descriptionHelp" className="form-text text-muted">
-              Give your post a description
-            </small>
-          </div>
-          <div className="form-group">
-            <label htmlFor="body">Body:</label>
-            <textarea
-              rows="5"
-              type="text"
-              className="form-control"
-              id="body"
-              name="body"
-              aria-describedby="bodyHelp"
-              placeholder="Enter body"
-              value={this.state.body}
-              onChange={this.handleChange}
-            />
-            <small id="bodyHelp" className="form-text text-muted">
-              Write the complete body of the post
-            </small>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
-      </div>
-    );
+
+    if (!this.props.loading && !this.props.title && mode.edit) {
+      this.props.history.replace('/');
+      return <p>...</p>;
+    } else {
+      return (
+        <div className="PostForm">
+          <h1>{mode} Post</h1>
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="title">Title:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                name="title"
+                aria-describedby="titleHelp"
+                placeholder="Enter title"
+                value={this.state.title}
+                onChange={this.handleChange}
+              />
+              <small id="titleHelp" className="form-text text-muted">
+                Give your post a title
+              </small>
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Description:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                name="description"
+                aria-describedby="descriptionHelp"
+                placeholder="Enter description"
+                value={this.state.description}
+                onChange={this.handleChange}
+              />
+              <small id="descriptionHelp" className="form-text text-muted">
+                Give your post a description
+              </small>
+            </div>
+            <div className="form-group">
+              <label htmlFor="body">Body:</label>
+              <textarea
+                rows="5"
+                type="text"
+                className="form-control"
+                id="body"
+                name="body"
+                aria-describedby="bodyHelp"
+                placeholder="Enter body"
+                value={this.state.body}
+                onChange={this.handleChange}
+              />
+              <small id="bodyHelp" className="form-text text-muted">
+                Write the complete body of the post
+              </small>
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
+      );
+    }
   }
 }
 
