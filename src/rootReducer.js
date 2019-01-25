@@ -48,7 +48,11 @@ export default function rootReducer(state = INITIAL_STATE, action) {
     }
     case REMOVE: {
       const { id } = action.payload;
-      const newState = { ...state, posts: { ...state.posts } };
+      const newState = {
+        ...state,
+        posts: { ...state.posts },
+        titles: { ...state.titles }
+      };
       delete newState.posts[id];
       delete newState.titles[id];
       return newState;
