@@ -5,7 +5,7 @@ import {
   ADD,
   REMOVE,
   EDIT,
-  LOAD_POSTS,
+  LOAD_TITLES,
   VOTE
 } from './actionTypes';
 import axios from 'axios';
@@ -55,7 +55,7 @@ export function addComment(payload) {
 
 export function gotPosts(payload) {
   return {
-    type: LOAD_POSTS,
+    type: LOAD_TITLES,
     payload
   };
 }
@@ -71,6 +71,10 @@ export function getPostAPI(payload) {
   return async function(dispatch) {
     try {
       const res = await axios.get(`${BASE_URL}/api/posts/${payload.id}`);
+      res.data.comments = res.data.comments.reduce((acc, next) => {
+        acc[next.id] = { body: next.text };
+        return acc;
+      }, {});
       dispatch(getPost(res.data));
     } catch (error) {
       console.log(error);
