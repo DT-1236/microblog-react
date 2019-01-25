@@ -10,9 +10,9 @@ class VoteContainer extends Component {
 }
 
 function mapStateToProps(state, { id }) {
-  if (Object.keys(state.titles).length) {
+  if (state.titles.hasOwnProperty(id)) {
     return { votes: state.titles[id].votes };
-  } else if (Object.keys(state.posts).length) {
+  } else if (state.posts.hasOwnProperty(id)) {
     return { votes: state.posts[id].votes };
   } else {
     return {};
