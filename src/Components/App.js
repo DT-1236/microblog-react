@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import NavBarContainer from '../Containers/NavBarContainer';
-import Routes from '../Components/Routes';
+import NavBar from './NavBar';
+import Routes from './Routes';
 
 class App extends Component {
   render() {
@@ -10,7 +10,7 @@ class App extends Component {
     } else {
       return (
         <div className="App">
-          <NavBarContainer />
+          <NavBar />
           <Routes />
         </div>
       );
