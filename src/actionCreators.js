@@ -73,18 +73,20 @@ export function getPostAPI(payload) {
 export function getPostsAPI() {
   return async function(dispatch) {
     try {
+      console.log('In the start of try block');
       const res = await axios.get(`${BASE_URL}/api/posts/`);
-
+      console.log('Finished the await', res);
       let posts = res.data.reduce((acc, next) => {
         const { id, comments, ...details } = next;
 
         acc[id] = details;
 
-        acc[id].comments = comments.reduce((accComments, nextComments) => {
-          accComments[nextComments.id] = { body: nextComments.text };
+        // acc[id].comments = comments.reduce((accComments, nextComments) => {
+        //   accComments[nextComments.id] = { body: nextComments.text };
 
-          return accComments;
-        }, {});
+        //   return accComments;
+        // }, {});
+        console.log('In a reduce function');
 
         return acc;
       }, {});
