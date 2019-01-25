@@ -67,12 +67,8 @@ export function getPostsPromise(dispatch) {
       .get(`${BASE_URL}/api/posts/`)
       .then(res => {
         const posts = res.data.reduce((acc, next) => {
-          const { id, comments, ...details } = next;
+          const { id, ...details } = next;
           acc[id] = details;
-          acc[id].comments = comments.reduce((accComments, nextComments) => {
-            accComments[nextComments.id] = { body: nextComments.text };
-            return accComments;
-          }, {});
           return acc;
         }, {});
         dispatch({ type: LOAD_POSTS, payload: posts });
