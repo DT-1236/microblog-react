@@ -1,4 +1,5 @@
 import {
+  GET_POST,
   REMOVE_COMMENT,
   ADD_COMMENT,
   ADD,
@@ -30,6 +31,14 @@ export function edit(payload) {
     payload
   };
 }
+
+export function getPost(payload) {
+  return {
+    type: GET_POST,
+    payload
+  };
+}
+
 export function removeComment(payload) {
   return {
     type: REMOVE_COMMENT,
@@ -47,6 +56,17 @@ export function gotPosts(payload) {
   return {
     type: LOAD_POSTS,
     payload
+  };
+}
+
+export function getPostAPI(payload) {
+  return async function(dispatch) {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/posts/${payload.id}`);
+      dispatch(getPost(res.data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
@@ -75,7 +95,7 @@ export function getPostsAPI() {
     }
   };
 }
-//////////
+
 export function updatePostAPI({ id, ...details }) {
   return async function(dispatch) {
     try {
