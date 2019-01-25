@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostView from '../Components/PostView';
-import { deletePostAPI } from '../actionCreators';
+import { deletePostAPI, getPostAPI } from '../actionCreators';
 
 class PostViewContainer extends Component {
   render() {
@@ -10,10 +10,10 @@ class PostViewContainer extends Component {
 }
 
 function mapStateToProps(state, { id }) {
-  return { ...state.posts[id], loading: state.loading };
+  return { ...state.posts[id] };
 }
 
 export default connect(
   mapStateToProps,
-  { deletePostAPI }
+  { deletePostAPI, getPostAPI }
 )(PostViewContainer);
