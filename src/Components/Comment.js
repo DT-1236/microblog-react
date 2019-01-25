@@ -7,7 +7,7 @@ class Comment extends Component {
     return (
       <div className="Comment">
         <button
-          className="border-0 text-danger"
+          className="border-0 text-danger comment-delete"
           onClick={() => deleteCommentAPI({ postId, commentId: id })}
         >
           <i className="fas fa-trash-alt" />

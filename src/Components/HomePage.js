@@ -8,9 +8,9 @@ class HomePage extends Component {
 
   renderPosts() {
     const { titles } = this.props;
-    return Object.keys(titles).map(id => (
-      <PostCard {...titles[id]} id={id} key={id} />
-    ));
+    return Object.keys(titles)
+      .sort((a, b) => titles[b].votes - titles[a].votes)
+      .map(id => <PostCard {...titles[id]} id={id} key={id} />);
   }
   render() {
     if (this.props.loading) {

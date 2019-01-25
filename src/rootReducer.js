@@ -5,7 +5,8 @@ import {
   EDIT,
   REMOVE_COMMENT,
   ADD_COMMENT,
-  LOAD_POSTS
+  LOAD_POSTS,
+  VOTE
 } from './actionTypes';
 const INITIAL_STATE = {
   posts: {},
@@ -94,6 +95,25 @@ export default function rootReducer(state = INITIAL_STATE, action) {
       //   delete target comment
       delete newComments[commentId];
       newState.posts[postId].comments = newComments;
+      return newState;
+    }
+    case VOTE: {
+      const { postId, vote } = action.payload;
+
+      const newState = {
+        ...state,
+        posts: {
+          ...state.posts,
+          [postId]: {
+            ...state.posts[postId]
+          }
+        },
+        titles: { ...state.titles, [postId]: { ...state.titles[postId] } }
+      };
+
+      newState.posts[postId].votes = vote;
+      newState.titles[postId].votes = vote;
+
       return newState;
     }
     default: {

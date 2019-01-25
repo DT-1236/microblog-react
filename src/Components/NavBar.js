@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 class NavBar extends Component {
   render() {
     return (
-      <div>
+      <div className="d-flex flex-column">
         <h1>
           <Link to="/">Microblog</Link>
         </h1>
