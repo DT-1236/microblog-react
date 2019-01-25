@@ -82,10 +82,12 @@ export function getPostAPI(payload) {
   };
 }
 
-export function getPostsAPI() {
+export function getPostsAPI({ limit, offset }) {
   return async function(dispatch) {
     try {
-      const res = await axios.get(`${BASE_URL}/api/posts/`);
+      const res = await axios.get(
+        `${BASE_URL}/api/posts/?limit=${limit}&offset=${offset}`
+      );
       let posts = res.data.reduce((acc, next) => {
         const { id, comments, ...details } = next;
 
