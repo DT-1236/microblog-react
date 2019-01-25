@@ -3,11 +3,22 @@ import { Link } from 'react-router-dom';
 import CommentsContainer from '../Containers/CommentsContainer';
 
 class PostView extends Component {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: this.props.hasOwnProperty('title')
+    };
+  }
+  async componentDidMount() {
+    if (!this.state.loaded) {
+      await this.props.getPostAPI({ id: this.props.id });
+      this.setState({ loaded: true });
+    }
+  }
 
   render() {
-    const { title, description, body, id, delete_post, history } = this.props;
-    if (!description && !this.props.loading) {
+    const { title, description, body, id, deletePostAPI, history } = this.props;
+    if (this.state.loaded && !title) {
       history.replace('/');
     }
     return (
@@ -25,8 +36,8 @@ class PostView extends Component {
               <button
                 className="border-0 text-danger"
                 name="delete"
-                onClick={() => {
-                  delete_post({ id });
+                onClick={async () => {
+                  await deletePostAPI({ id });
                   history.replace('/');
                 }}
               >
