@@ -5,6 +5,7 @@ import {
   EDIT,
   REMOVE_COMMENT,
   ADD_COMMENT,
+  INDICATE_LOADING,
   LOAD_POSTS
 } from './actionTypes';
 const INITIAL_STATE = {
@@ -15,6 +16,9 @@ const INITIAL_STATE = {
 
 export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case INDICATE_LOADING: {
+      return { ...state, loading: true };
+    }
     case GET_POST: {
       const { id, ...details } = action.payload;
       const newState = { ...state, posts: { ...state.posts, [id]: details } };

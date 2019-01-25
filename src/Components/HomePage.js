@@ -3,6 +3,7 @@ import PostCard from './PostCard';
 
 class HomePage extends Component {
   componentDidMount() {
+    // Consider adding a check for titles length
     this.props.getPostsAPI();
   }
 

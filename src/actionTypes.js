@@ -5,3 +5,4 @@ export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const GET_POST = 'GET_POST';
+export const INDICATE_LOADING = 'INDICATE_LOADING';
