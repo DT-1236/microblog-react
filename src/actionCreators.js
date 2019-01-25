@@ -5,7 +5,8 @@ import {
   ADD,
   REMOVE,
   EDIT,
-  LOAD_POSTS
+  LOAD_POSTS,
+  INDICATE_LOADING
 } from './actionTypes';
 import axios from 'axios';
 
@@ -157,5 +158,25 @@ export function deleteCommentAPI({ postId, commentId }) {
     } catch (error) {
       console.log(error);
     }
+  };
+}
+
+export function getPostsPromise(dispatch) {
+  return function() {
+    dispatch({ type: INDICATE_LOADING });
+    axios.get(`${BASE_URL}/api/posts/`).then(res => {
+      const posts = res.data
+        .reduce((acc, next) => {
+          const { id, comments, ...details } = next;
+          acc[id] = details;
+          acc[id].comments = comments.reduce((accComments, nextComments) => {
+            accComments[nextComments.id] = { body: nextComments.text };
+            return accComments;
+          }, {});
+          return acc;
+        }, {})
+        .catch(error => console.error(error));
+      dispatch({ type: LOAD_POSTS, payload: posts });
+    });
   };
 }
