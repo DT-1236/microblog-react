@@ -8,10 +8,12 @@ import {
   LOAD_POSTS,
   VOTE
 } from './actionTypes';
+// import { combineReducers } from 'redux';
+// import { titles, posts, comments } from './Reducers';
+
 const INITIAL_STATE = {
   posts: {},
-  titles: {},
-  loading: true
+  titles: {}
 };
 
 export default function rootReducer(state = INITIAL_STATE, action) {

@@ -15,7 +15,7 @@ function mapStateToProps(state, { id }) {
   } else if (Object.keys(state.posts).length) {
     return { votes: state.posts[id].votes };
   } else {
-    return null;
+    return {};
   }
 }
 

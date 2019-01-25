@@ -2,8 +2,18 @@ import React, { Component } from 'react';
 import PostCard from './PostCard';
 
 class HomePage extends Component {
-  componentDidMount() {
-    this.props.getPostsAPI();
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: Object.keys(this.props.titles).length
+    };
+  }
+
+  async componentDidMount() {
+    if (!this.state.loaded) {
+      await this.props.getPostsAPI();
+      this.setState({ loaded: true });
+    }
   }
 
   renderPosts() {
@@ -13,7 +23,7 @@ class HomePage extends Component {
       .map(id => <PostCard {...titles[id]} id={id} key={id} />);
   }
   render() {
-    if (this.props.loading) {
+    if (!this.state.loaded) {
       return <p>Loading...</p>;
     }
     return (
