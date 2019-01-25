@@ -12,9 +12,7 @@ export default function titles(state = INITIAL_STATE, action) {
     // eslint-disable-next-line no-fallthrough
     case EDIT: {
       const { id, body, votes, comments, ...post } = action.payload;
-      const newState = { ...state };
-      newState[id] = post;
-      return newState;
+      return { ...state, [id]: post };
     }
     case REMOVE: {
       const { id } = action.payload;
@@ -25,9 +23,7 @@ export default function titles(state = INITIAL_STATE, action) {
 
     case VOTE: {
       const { postId, vote } = action.payload;
-      const newState = { ...state, [postId]: { ...state[postId] } };
-      newState[postId].votes = vote;
-      return newState;
+      return { ...state, [postId]: { ...state[postId], votes: vote } };
     }
     default: {
       return state;

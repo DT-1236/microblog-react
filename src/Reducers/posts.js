@@ -14,17 +14,14 @@ export default function posts(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_POST: {
       const { id, ...details } = action.payload;
-      const newState = { ...state, [id]: details };
-      return newState;
+      return { ...state, [id]: details };
     }
     case ADD:
 
     // eslint-disable-next-line no-fallthrough
     case EDIT: {
-      const { id, body, votes, comments, ...post } = action.payload;
-      const newState = { ...state };
-      newState[id] = { body, votes, comments, ...post };
-      return newState;
+      const { id, ...post } = action.payload;
+      return { ...state, [id]: { ...post } };
     }
     case REMOVE: {
       const { id } = action.payload;
