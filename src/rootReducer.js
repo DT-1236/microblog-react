@@ -1,4 +1,5 @@
 import {
+  GET_POST,
   ADD,
   REMOVE,
   EDIT,
@@ -14,8 +15,19 @@ const INITIAL_STATE = {
 
 export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case LOAD_POSTS:
-      return { titles: action.payload, loading: false };
+    case GET_POST: {
+      const { id, ...details } = action.payload;
+      const newState = { ...state, posts: { ...state.posts, [id]: details } };
+      const comments = details.comments.reduce((acc, next) => {
+        acc[next.id] = { body: next.text };
+        return acc;
+      }, {});
+      newState.posts[id].comments = comments;
+      return newState;
+    }
+    case LOAD_POSTS: {
+      return { ...state, titles: action.payload, loading: false };
+    }
     case ADD:
     //   const { id, ...post } = action.payload;
     //   const newState = { ...state, posts: { ...state.posts } };
@@ -24,15 +36,21 @@ export default function rootReducer(state = INITIAL_STATE, action) {
 
     // eslint-disable-next-line no-fallthrough
     case EDIT: {
-      const { id, ...post } = action.payload;
-      const newState = { ...state, posts: { ...state.posts } };
-      newState.posts[id] = post;
+      const { id, body, votes, comments, ...post } = action.payload;
+      const newState = {
+        ...state,
+        posts: { ...state.posts },
+        titles: { ...state.titles }
+      };
+      newState.posts[id] = { body, votes, comments, ...post };
+      newState.titles[id] = post;
       return newState;
     }
     case REMOVE: {
       const { id } = action.payload;
       const newState = { ...state, posts: { ...state.posts } };
       delete newState.posts[id];
+      delete newState.titles[id];
       return newState;
     }
     case ADD_COMMENT: {
