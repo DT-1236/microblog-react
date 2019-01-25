@@ -14,8 +14,8 @@ class Comments extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    const { addCommentAPI, postId } = this.props;
-    addCommentAPI({
+    const { addCommentPromise, postId } = this.props;
+    addCommentPromise({
       postId: postId,
       comment: this.state.newComment
     });

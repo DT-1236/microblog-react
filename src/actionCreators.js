@@ -60,113 +60,13 @@ export function gotPosts(payload) {
   };
 }
 
-export function getPostAPI(payload) {
-  return async function(dispatch) {
-    try {
-      const res = await axios.get(`${BASE_URL}/api/posts/${payload.id}`);
-      dispatch(getPost(res.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function getPostsAPI() {
-  return async function(dispatch) {
-    try {
-      const res = await axios.get(`${BASE_URL}/api/posts/`);
-
-      let posts = res.data.reduce((acc, next) => {
-        const { id, comments, ...details } = next;
-
-        acc[id] = details;
-
-        acc[id].comments = comments.reduce((accComments, nextComments) => {
-          accComments[nextComments.id] = { body: nextComments.text };
-
-          return accComments;
-        }, {});
-
-        return acc;
-      }, {});
-
-      dispatch(gotPosts(posts));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function updatePostAPI({ id, ...details }) {
-  return async function(dispatch) {
-    try {
-      await axios.put(`${BASE_URL}/api/posts/${id}`, details);
-
-      dispatch(edit({ id, ...details }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-export function addPostAPI(payload) {
-  return async function(dispatch) {
-    try {
-      const res = await axios.post(`${BASE_URL}/api/posts/`, payload);
-
-      dispatch(add(res.data));
-      return res.data.id;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-export function deletePostAPI({ id }) {
-  return async function(dispatch) {
-    try {
-      await axios.delete(`${BASE_URL}/api/posts/${id}`);
-
-      dispatch(remove({ id }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-export function addCommentAPI({ postId, comment }) {
-  return async function(dispatch) {
-    try {
-      const res = await axios.post(
-        `${BASE_URL}/api/posts/${postId}/comments/`,
-        { text: comment }
-      );
-
-      let payload = { postId, commentId: res.data.id, comment: res.data.text };
-      dispatch(addComment(payload));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function deleteCommentAPI({ postId, commentId }) {
-  return async function(dispatch) {
-    try {
-      await axios.delete(
-        `${BASE_URL}/api/posts/${postId}/comments/${commentId}`
-      );
-
-      dispatch(removeComment({ commentId, postId }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
 export function getPostsPromise(dispatch) {
   return function() {
     dispatch({ type: INDICATE_LOADING });
-    axios.get(`${BASE_URL}/api/posts/`).then(res => {
-      const posts = res.data
-        .reduce((acc, next) => {
+    axios
+      .get(`${BASE_URL}/api/posts/`)
+      .then(res => {
+        const posts = res.data.reduce((acc, next) => {
           const { id, comments, ...details } = next;
           acc[id] = details;
           acc[id].comments = comments.reduce((accComments, nextComments) => {
@@ -174,9 +74,77 @@ export function getPostsPromise(dispatch) {
             return accComments;
           }, {});
           return acc;
-        }, {})
-        .catch(error => console.error(error));
-      dispatch({ type: LOAD_POSTS, payload: posts });
-    });
+        }, {});
+        dispatch({ type: LOAD_POSTS, payload: posts });
+      })
+      .catch(error => console.error(error));
+  };
+}
+
+export function getPostPromise(dispatch) {
+  return function({ id }) {
+    return axios
+      .get(`${BASE_URL}/api/posts/${id}`)
+      .then(res => {
+        dispatch(getPost(res.data));
+      })
+      .catch(error => console.error(error));
+  };
+}
+
+export function deletePostPromise(dispatch) {
+  return function({ id }) {
+    return axios
+      .delete(`${BASE_URL}/api/posts/${id}`)
+      .then(res => {
+        dispatch(remove({ id }));
+      })
+      .catch(error => console.error(error));
+  };
+}
+
+export function updatePostPromise(dispatch) {
+  return function({ id, ...details }) {
+    return axios
+      .put(`${BASE_URL}/api/posts/${id}`, details)
+      .then(res => dispatch(edit({ id, ...details })))
+      .catch(error => console.error(error));
+  };
+}
+
+export function addPostPromise(dispatch) {
+  return function(payload) {
+    return axios
+      .post(`${BASE_URL}/api/posts/`, payload)
+      .then(res => {
+        dispatch(add(res.data));
+        return res.data.id;
+      })
+      .catch(error => console.error(error));
+  };
+}
+
+export function addCommentPromise(dispatch) {
+  return function({ postId, comment }) {
+    return axios
+      .post(`${BASE_URL}/api/posts/${postId}/comments/`, { text: comment })
+      .then(res => {
+        const payload = {
+          postId,
+          commentId: res.data.id,
+          comment: res.data.text
+        };
+        dispatch(addComment(payload));
+      })
+      .catch(error => console.error(error));
+  };
+}
+
+export function deleteCommentPromise(dispatch) {
+  return function({ postId, commentId }) {
+    axios
+      .delete(`${BASE_URL}/api/posts/${postId}/comments/${commentId}`)
+      .then(() => dispatch(removeComment({ commentId, postId })))
+      .catch(error => console.error(error));
   };
 }

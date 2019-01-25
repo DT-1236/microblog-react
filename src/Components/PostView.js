@@ -9,15 +9,23 @@ class PostView extends Component {
       loaded: this.props.hasOwnProperty('title')
     };
   }
-  async componentDidMount() {
+  componentDidMount() {
     if (!this.state.loaded) {
-      await this.props.getPostAPI({ id: this.props.id });
-      this.setState({ loaded: true });
+      this.props
+        .getPostPromise({ id: this.props.id })
+        .then(() => this.setState({ loaded: true }));
     }
   }
 
   render() {
-    const { title, description, body, id, deletePostAPI, history } = this.props;
+    const {
+      title,
+      description,
+      body,
+      id,
+      deletePostPromise,
+      history
+    } = this.props;
     if (this.state.loaded && !title) {
       history.replace('/');
     }
@@ -36,9 +44,8 @@ class PostView extends Component {
               <button
                 className="border-0 text-danger"
                 name="delete"
-                onClick={async () => {
-                  await deletePostAPI({ id });
-                  history.replace('/');
+                onClick={() => {
+                  deletePostPromise({ id }).then(() => history.replace('/'));
                 }}
               >
                 <i className="fas fa-trash-alt" />

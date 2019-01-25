@@ -15,7 +15,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPostsAPI: getPostsPromise(dispatch)
+    getPostsPromise: getPostsPromise(dispatch)
   };
 }
 

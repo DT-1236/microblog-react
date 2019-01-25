@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Comments from '../Components/Comments';
-import { addCommentAPI } from '../actionCreators';
+import { addCommentPromise } from '../actionCreators';
 
 class CommentsContainer extends Component {
   render() {
@@ -17,7 +17,13 @@ function mapStateToProps(state, { postId }) {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    addCommentPromise: addCommentPromise(dispatch)
+  };
+}
+
 export default connect(
   mapStateToProps,
-  { addCommentAPI }
+  mapDispatchToProps
 )(CommentsContainer);

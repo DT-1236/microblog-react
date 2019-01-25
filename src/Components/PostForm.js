@@ -29,16 +29,16 @@ class PostForm extends Component {
   }
 
   async handleSubmit(event) {
-    const { updatePostAPI, mode, addPostAPI, id, history } = this.props;
+    const { updatePostPromise, mode, addPostPromise, id, history } = this.props;
     event.preventDefault();
 
     const { loading, ...details } = this.state;
     let postId;
 
     if (mode === 'Edit') {
-      updatePostAPI({ ...details, id });
+      updatePostPromise({ ...details, id });
     } else {
-      postId = await addPostAPI(details);
+      postId = await addPostPromise(details);
     }
     history.push(`/${id || postId}`);
   }

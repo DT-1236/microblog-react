@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostForm from '../Components/PostForm';
-import { updatePostAPI, addPostAPI } from '../actionCreators';
+import { updatePostPromise, addPostPromise } from '../actionCreators';
 
 class PostFormContainer extends Component {
   render() {
@@ -14,7 +14,14 @@ function mapStateToProps(state, { id }) {
   return { ...state.posts[id], length, loading: state.loading };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    addPostPromise: addPostPromise(dispatch),
+    updatePostPromise: updatePostPromise(dispatch)
+  };
+}
+
 export default connect(
   mapStateToProps,
-  { addPostAPI, updatePostAPI }
+  mapDispatchToProps
 )(PostFormContainer);
