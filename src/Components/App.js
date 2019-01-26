@@ -9,7 +9,7 @@ class App extends Component {
       return <h1>Loading...</h1>;
     } else {
       return (
-        <div className="App">
+        <div className="App container d-flex flex-column justify-content-center align-items-center text-center">
           <NavBar />
           <Routes />
         </div>
