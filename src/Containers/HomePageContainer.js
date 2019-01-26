@@ -10,7 +10,7 @@ class HomePageContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  return { titles: state.titles, loading: state.loading };
+  return { titles: state.titles };
 }
 
 function mapDispatchToProps(dispatch) {

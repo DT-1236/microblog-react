@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CommentsContainer from '../Containers/CommentsContainer';
+import VoteContainer from '../Containers/VoteContainer';
 
 class PostView extends Component {
   constructor(props) {
@@ -30,19 +31,20 @@ class PostView extends Component {
       history.replace('/');
     }
     return (
-      <div className="d-flex justify-content-center">
-        <div className="card bg-light mb-3">
+      <div className="d-flex align-items-center justify-content-center">
+        <div className="card bg-light mb-3 p-1">
           <div>
             <div className="card-header">
               <h1>{title}</h1>
               <h5>{description}</h5>
+              <VoteContainer id={id} />
             </div>
             <div className="card-body">
               <Link name="edit" to={`/${id}/edit`}>
                 <i className="fas fa-edit" />
               </Link>
               <button
-                className="border-0 text-danger"
+                className="border-0 text-danger post-delete"
                 name="delete"
                 onClick={() => {
                   deletePostPromise({ id }).then(() => history.replace('/'));

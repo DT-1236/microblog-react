@@ -2,19 +2,45 @@ import React, { Component } from 'react';
 import PostCard from './PostCard';
 
 class HomePage extends Component {
-  componentDidMount() {
-    // Consider adding a check for titles length
-    this.props.getPostsPromise();
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: Object.keys(this.props.titles).length
+    };
+    this.infiniteScroll = this.infiniteScroll.bind(this);
+  }
+
+  async componentDidMount() {
+    if (!this.state.loaded) {
+      await this.props.getPostsPromise({
+        offset: 0,
+        limit: this.props.pageSize
+      });
+      this.setState({ loaded: true });
+    }
+    window.addEventListener('scroll', this.infiniteScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.infiniteScroll);
+  }
+
+  async infiniteScroll() {
+    if (document.body.scrollHeight - window.innerHeight - window.scrollY < 50) {
+      const length = Object.keys(this.props.titles).length;
+      const { getPostsPromise, pageSize } = this.props;
+      await getPostsPromise({ limit: pageSize, offset: length });
+    }
   }
 
   renderPosts() {
     const { titles } = this.props;
-    return Object.keys(titles).map(id => (
-      <PostCard {...titles[id]} id={id} key={id} />
-    ));
+    return Object.keys(titles)
+      .sort((a, b) => titles[b].votes - titles[a].votes)
+      .map(id => <PostCard {...titles[id]} id={id} key={id} />);
   }
   render() {
-    if (this.props.loading) {
+    if (!this.state.loaded) {
       return <p>Loading...</p>;
     }
     return (
@@ -26,5 +52,9 @@ class HomePage extends Component {
     );
   }
 }
+
+HomePage.defaultProps = {
+  pageSize: 10
+};
 
 export default HomePage;

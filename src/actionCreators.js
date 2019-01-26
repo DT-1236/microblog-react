@@ -5,8 +5,8 @@ import {
   ADD,
   REMOVE,
   EDIT,
-  LOAD_POSTS,
-  INDICATE_LOADING
+  LOAD_TITLES,
+  VOTE
 } from './actionTypes';
 import axios from 'axios';
 
@@ -55,23 +55,29 @@ export function addComment(payload) {
 
 export function gotPosts(payload) {
   return {
-    type: LOAD_POSTS,
+    type: LOAD_TITLES,
+    payload
+  };
+}
+
+export function vote(payload) {
+  return {
+    type: VOTE,
     payload
   };
 }
 
 export function getPostsPromise(dispatch) {
-  return function() {
-    dispatch({ type: INDICATE_LOADING });
+  return function({ limit, offset }) {
     axios
-      .get(`${BASE_URL}/api/posts/`)
+      .get(`${BASE_URL}/api/posts/?limit=${limit}&offset=${offset}`)
       .then(res => {
         const posts = res.data.reduce((acc, next) => {
           const { id, ...details } = next;
           acc[id] = details;
           return acc;
         }, {});
-        dispatch({ type: LOAD_POSTS, payload: posts });
+        dispatch({ type: LOAD_TITLES, payload: posts });
       })
       .catch(error => console.error(error));
   };
@@ -141,6 +147,15 @@ export function deleteCommentPromise(dispatch) {
     axios
       .delete(`${BASE_URL}/api/posts/${postId}/comments/${commentId}`)
       .then(() => dispatch(removeComment({ commentId, postId })))
+      .catch(error => console.error(error));
+  };
+}
+
+export function votePromise(dispatch) {
+  return function({ postId, type }) {
+    return axios
+      .post(`${BASE_URL}/api/posts/${postId}/vote/${type}`)
+      .then(res => dispatch(vote({ vote: res.data.votes, postId })))
       .catch(error => console.error(error));
   };
 }
