@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Vote from '../Components/Vote';
-import { voteAPI } from '../actionCreators';
+import { votePromise } from '../actionCreators';
 
 class VoteContainer extends Component {
   render() {
@@ -19,7 +19,11 @@ function mapStateToProps(state, { id }) {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return { votePromise: votePromise(dispatch) };
+}
+
 export default connect(
   mapStateToProps,
-  { voteAPI }
+  mapDispatchToProps
 )(VoteContainer);

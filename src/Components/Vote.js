@@ -22,7 +22,7 @@ class Vote extends Component {
             className="btn btn-success"
             aria-label="..."
             onClick={() =>
-              this.props.voteAPI({ postId: this.props.id, type: 'up' })
+              this.props.votePromise({ postId: this.props.id, type: 'up' })
             }
           >
             <i className="far fa-thumbs-up" />
@@ -32,7 +32,7 @@ class Vote extends Component {
             className="btn btn-danger"
             aria-label="..."
             onClick={() =>
-              this.props.voteAPI({ postId: this.props.id, type: 'down' })
+              this.props.votePromise({ postId: this.props.id, type: 'down' })
             }
           >
             <i className="far fa-thumbs-down" />
